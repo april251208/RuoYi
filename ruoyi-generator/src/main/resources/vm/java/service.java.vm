@@ -1,0 +1,13 @@
+package ${packageName}.service;
+import ${packageName}.service.BaseCRUDService;
+
+/**
+ * ${functionName}Service接口
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface ${ClassName}Service extends BaseCRUDService{
+{
+
+}

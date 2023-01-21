@@ -1,0 +1,91 @@
+package ${packageName}.service.impl;
+
+import ${packageName}.dao.${ClassName}Dao;
+import ${packageName}.domain.${ClassName};
+import ${packageName}.service.I${ClassName}Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+import java.util.List;
+import java.util.Map;
+
+
+/**
+ * ${functionName}Service业务层处理
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Service
+public class ${ClassName}ServiceImpl implements I${ClassName}Service 
+{
+    @Autowired
+    private ${ClassName}Dao ${className}Dao;
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return ${className}Dao.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Map<String, Object> selectByPrimaryKey(String id) {
+        return ${className}Dao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int insert(Map<String, Object> map) {
+        return ${className}Dao.insert(map);
+    }
+
+    @Override
+    public int update(Map<String, Object> map) {
+        return ${className}Dao.update(map);
+    }
+
+    @Override
+    public int deleteByMap(Map<String, Object> map) {
+        return ${className}Dao.deleteByMap(map);
+    }
+
+    @Override
+    public int updateByMap(Map<String, Object> map) {
+        return ${className}Dao.updateByMap(map);
+    }
+
+    @Override
+    public Map<String, Object> getOne(Map<String, Object> map) {
+        return ${className}Dao.getOne(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getAll(Map<String, Object> map) {
+        return ${className}Dao.getAll(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryPage(Map<String, Object> map) {
+        return ${className}Dao.queryPage(map);
+    }
+
+    @Override
+    public int count(Map<String, Object> map) {
+        return ${className}Dao.count(map);
+    }
+
+    @Override
+    public void insertBatch(List<Map<String, Object>> list) {
+        ${className}Dao.insertBatch(list);
+    }
+
+    @Override
+    public void deleteBatch(List<Map<String, Object>> list) {
+        ${className}Dao.deleteBatch(list);
+    }
+
+    @Override
+    public void updateBatch(List<Map<String, Object>> list) {
+        ${className}Dao.updateBatch(list);
+    }
+}

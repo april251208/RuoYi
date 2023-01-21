@@ -1,0 +1,13 @@
+package ${packageName}.mapper;
+
+import com.philisense.www.mapper.BaseCRUDMapper;
+
+/**
+ * ${functionName}Mapper接口
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface ${ClassName}Mapper  extends BaseCRUDMapper{
+{
+}

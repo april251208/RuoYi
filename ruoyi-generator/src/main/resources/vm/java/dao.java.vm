@@ -1,0 +1,13 @@
+package ${packageName}.service;
+import ${packageName}.dao.BaseCRUDDAO;
+
+/**
+ * ${functionName}Dao接口
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface ${ClassName}Dao extends BaseCRUDDAO{
+{
+
+}

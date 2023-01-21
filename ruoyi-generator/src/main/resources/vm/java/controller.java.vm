@@ -1,0 +1,394 @@
+package ${packageName}.controller;
+
+import java.util.List;
+
+import com.philisense.www.annotation.log.OperateLog;
+import com.philisense.www.common.config.CommonConst;
+import com.philisense.www.controller.BaseUtilController;
+import com.philisense.www.pojos.entity.InventoryProducts;
+import com.philisense.www.service.InventoryProductsService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.util.*;
+import ${packageName}.pojos.entity.${ClassName};
+import ${packageName}.service.I${ClassName}Service;
+
+
+/**
+ * ${functionName}Controller
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Controller
+@RequestMapping(CommonConst.WEB_REST_SERVICE_PREFICX + "${className}")
+@API(tags = "${ClassName}Controller|一个用来操作-{${functionName}}-业务模块的控制器")
+public class ${ClassName}Controller extends BaseController {
+
+    @Autowired
+    private I${ClassName}Service ${className}Service;
+
+    /**
+     * 新增${functionName}
+     */
+    @PostMapping("/insert")
+    @ApiOperation(value = "根据-{${functionName}}-插入记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据插入成功\"},失败返回:{\"success\":false,\"message\",\"数据插入失败\"}")
+    @ApiImplicitParams({
+        #foreach ($column in $columns)
+                @ApiImplicitParam(paramType = "body" , name = "$column.javaField" , value = "$column.columnComment" , required = true, dataType = "$column.javaType" , dataTypeClass = $column.javaType'.class'),
+        #end})
+    @OperateLog(name = "根据-{${functionName}}-插入记录" , value = "插入" , type = "PC")
+    public Map<String, Object> insertFor${ClassName}ForWeb(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        try {
+
+            Map<String, Object> paramsmap = ${className}Service.selectByPrimaryKey(map.get("id") + "");
+
+            int flag = 0;
+
+            if (null != paramsmap && paramsmap.size() > 0) {
+                paramsmap.putAll(map);
+                flag = ${className}Service.insert(paramsmap);
+            }
+
+            if (1 <= flag) {
+                result.put(DATASUCCESS, SUCCESSFLAG);
+                result.put(DATAMESSAGE, UPDATE_SUCCESS_MSG);
+            } else {
+                result.put(DATASUCCESS, ERRORFLAG);
+                result.put(DATAMESSAGE, UPDATE_FAIL_MSG);
+            }
+
+        } catch (Exception e) {
+            result.put(DATASUCCESS, ERRORFLAG);
+            result.put(DATAMESSAGE, UPDATE_FAIL_MSG + e.getMessage());
+        }
+        return result;
+    }
+
+
+    /**
+     * 删除${functionName}
+     */
+    @GetMapping("/delete")
+    @ApiOperation(value = "根据-{${functionName}}-删除记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据删除成功\"},失败返回:{\"success\":false,\"message\",\"数据删除失败\"}")
+    @ApiImplicitParam(paramType = "delete" , name = "recordid" , value = "记录主键" , required = true, dataTypeClass = String.class)
+    @OperateLog(name = "根据-{${functionName}}-删除记录" , value = "删除" , type = "PC")
+    public Map<String, Object> deleteByPrimaryKeyFor${ClassName}ForWeb(HttpServletRequest request, HttpServletResponse response, @RequestParam String recordid) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        try {
+            int flag = ${className}Service.deleteByPrimaryKey(recordid);
+            if (1 <= flag) {
+                result.put(DATASUCCESS, SUCCESSFLAG);
+                result.put(DATAMESSAGE, DELETE_SUCCESS_MSG);
+            } else {
+                result.put(DATASUCCESS, ERRORFLAG);
+                result.put(DATAMESSAGE, DELETE_FAIL_MSG);
+            }
+
+        } catch (Exception e) {
+            result.put(DATASUCCESS, ERRORFLAG);
+            result.put(DATAMESSAGE, DELETE_FAIL_MSG + e.getMessage());
+        }
+        return result;
+    }
+
+
+@PostMapping("/update")
+@ApiOperation(value = "根据-{${functionName}}-对象更新记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据更新成功\"},失败返回:{\"success\":false,\"message\",\"数据更新失败\"}")
+    #foreach ($column in $columns)
+    @ApiImplicitParam(paramType = "body" , name = "$column.javaField" , value = "$column.columnComment" , required = true, dataType = "$column.javaType" , dataTypeClass = $column.javaType'.class'),
+    #end})
+@OperateLog(name = "根据-{${functionName}}-对象更新记录" , value = "update" , type = "PC")
+public Map<String, Object> updateFor${className}ForWeb(HttpServletRequest request,HttpServletResponse response,@RequestBody Map<String, Object> map){
+        Map<String, Object> result=new HashMap<String, Object>();
+        try{
+
+        Map<String, Object> paramsmap=  ${className}Service.selectByPrimaryKey(map.get("id")+"");
+
+        int flag=0;
+
+        if(null!=paramsmap&&paramsmap.size()>0){
+        paramsmap.putAll(map);
+        flag=  ${className}Service.update(paramsmap);
+        }
+
+        if(1<=flag){
+        result.put(DATASUCCESS,SUCCESSFLAG);
+        result.put(DATAMESSAGE,UPDATE_SUCCESS_MSG);
+        }else{
+        result.put(DATASUCCESS,ERRORFLAG);
+        result.put(DATAMESSAGE,UPDATE_FAIL_MSG);
+        }
+
+        }catch(Exception e){
+        result.put(DATASUCCESS,ERRORFLAG);
+        result.put(DATAMESSAGE,UPDATE_FAIL_MSG+e.getMessage());
+        }
+        return result;
+        }
+
+
+@GetMapping("/get")
+@ApiOperation(value = "根据-{${functionName}}-主键查询记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据查询成功\",\"datarecord\":\"{}\"},失败返回:{\"success\":false,\"message\",\"数据查询失败\"}")
+@ApiImplicitParam(paramType = "query" , name = "recordid" , value = "记录主键" , required = true, dataTypeClass = String.class)
+@OperateLog(name = "根据-{${functionName}}-主键查询记录" , value = "query" , type = "PC")
+public Map<String, Object> selectByPrimaryKeyFor${className}ForWeb(HttpServletRequest request,HttpServletResponse response,@RequestParam String recordid){
+        Map<String, Object> result=new HashMap<String, Object>();
+        try{
+
+        result.put(DATASUCCESS,SUCCESSFLAG);
+        result.put(DATAMESSAGE,QUERY_SUCCESS_MSG);
+        result.put(DATARECORD, ${className}Service.selectByPrimaryKey(recordid));
+        }catch(Exception e){
+        result.put(DATASUCCESS,ERRORFLAG);
+        result.put(DATAMESSAGE,QUERY_FAIL_MSG+e.getMessage());
+        }
+        return result;
+        }
+
+@PostMapping("/getOne")
+@ApiOperation(value = "根据-{${functionName}}-对象Map查询记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据查询成功\",\"datarecord\":\"{}\"},失败返回:{\"success\":false,\"message\",\"数据查询失败\"}")
+@ApiImplicitParams({
+    #foreach ($column in $columns)
+            @ApiImplicitParam(paramType = "body" , name = "$column.javaField" , value = "$column.columnComment" , required = true, dataType = "$column.javaType" , dataTypeClass = $column.javaType'.class'),
+    #end})
+@OperateLog(name = "根据-{${functionName}}-对象Map查询记录,返回一条数据" , value = "query" , type = "PC")
+public Map<String, Object> getOneFor${className}ForWeb(HttpServletRequest request,HttpServletResponse response,@RequestBody Map<String, Object> map){
+        Map<String, Object> result=new HashMap<String, Object>();
+        try{
+
+        result.put(DATASUCCESS,SUCCESSFLAG);
+        result.put(DATAMESSAGE,QUERY_SUCCESS_MSG);
+        result.put(DATARECORD, ${className}Service.getOne(map));
+        }catch(Exception e){
+        result.put(DATASUCCESS,ERRORFLAG);
+        result.put(DATAMESSAGE,QUERY_FAIL_MSG+e.getMessage());
+        }
+        return result;
+        }
+
+@PostMapping("/getAll")
+@ApiOperation(value = "根据-{${functionName}}-对象Map查询所有记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据查询成功\",\"data\":\"[]\"},失败返回:{\"success\":false,\"message\",\"数据查询失败\"}")
+@ApiImplicitParams({
+    #foreach ($column in $columns)
+            @ApiImplicitParam(paramType = "body" , name = "$column.javaField" , value = "$column.columnComment" , required = true, dataType = "$column.javaType" , dataTypeClass = $column.javaType'.class'),
+    #end})
+@OperateLog(name = "根据-{${functionName}}-对象Map查询所有记录" , value = "query" , type = "PC")
+public Map<String, Object> getAllFor${className}ForWeb(HttpServletRequest request,HttpServletResponse response,@RequestBody Map<String, Object> map){
+        Map<String, Object> result=new HashMap<String, Object>();
+        try{
+
+        result.put(DATASUCCESS,SUCCESSFLAG);
+        result.put(DATAMESSAGE,QUERY_SUCCESS_MSG);
+        result.put(DATALIST, ${className}Service.getAll(map));
+        }catch(Exception e){
+        result.put(DATASUCCESS,ERRORFLAG);
+        result.put(DATAMESSAGE,QUERY_FAIL_MSG+e.getMessage());
+        }
+        return result;
+        }
+
+
+@PostMapping("/queryPage")
+@ApiOperation(value = "根据-{${functionName}}-对象Map分页记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据查询成功\",\"data\":\"[]\"},失败返回:{\"success\":false,\"message\",\"数据查询失败\"}")
+@ApiImplicitParams({@ApiImplicitParam(paramType = "body" , name = ${className}.ID_KEY, value = "主键ID" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.CREATE_TIME_KEY, value = "申请时间" , required = true, dataTypeClass = Date.class), @ApiImplicitParam(paramType = "body" , name = ${className}.UPDATE_TIME_KEY, value = "更新时间" , required = true, dataTypeClass = Date.class), @ApiImplicitParam(paramType = "body" , name = ${className}.APPLY_DEPT_KEY, value = "申请部门" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.APPLY_USER_KEY, value = "申请人" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.APPLY_USER_ID_KEY, value = "申请人Id" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.ORG_ID_KEY, value = "机构ID" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.ORG_NAME_KEY, value = "机构名字" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.GOODS_NAME_KEY, value = "存货名称" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.MODEL_KEY, value = "规格型号" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.UNIT_KEY, value = "单位" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.AMOUNT_KEY, value = "结存数量 " , required = true, dataTypeClass = int.class), @ApiImplicitParam(paramType = "body" , name = ${className}.REMARK_KEY, value = "备注" , required = true, dataTypeClass = String.class)
+})
+@OperateLog(name = "根据-{${functionName}}-对象Map分页记录" , value = "query" , type = "PC")
+public Map<String, Object> queryPageFor${className}ForWeb(HttpServletRequest request,HttpServletResponse response,@RequestBody Map<String, Object> map){
+        Map<String, Object> result=new HashMap<String, Object>();
+        try{
+
+        int currentPage=map.get(DATACURRENT)!=null?Integer.parseInt(map.get(DATACURRENT)+"")-1:0;
+        int pageSize=map.get(PAGESIZE)!=null?Integer.parseInt(map.get(PAGESIZE)+""):10;
+        int pageStart=currentPage*pageSize;
+
+
+        map.put(PAGESIZE,pageSize);
+        map.put(PAGESTART,pageStart);
+
+        int total= ${className}Service.count(map);
+        List<Map<String, Object>>datalist=new ArrayList<Map<String, Object>>();
+        if(total>0){
+        datalist= ${className}Service.queryPage(map);
+        }
+        result.put(DATASUCCESS,SUCCESSFLAG);
+        result.put(DATAMESSAGE,QUERY_SUCCESS_MSG);
+        result.put(DATALIST,datalist);
+        Map<String, Object> pagemode=new HashMap<String, Object>();
+        pagemode.put(DATATOTAL,total);
+        pagemode.put(PAGESIZE,map.get(PAGESIZE)!=null?map.get(PAGESIZE):10);
+        pagemode.put(DATACURRENT,map.get(DATACURRENT)!=null?map.get(DATACURRENT):0);
+        result.put(PAGINATION,pagemode);
+        }catch(Exception e){
+        result.put(DATASUCCESS,ERRORFLAG);
+        result.put(DATAMESSAGE,QUERY_FAIL_MSG+e.getMessage());
+        }
+        return result;
+        }
+
+
+@PostMapping("/count")
+@ApiOperation(value = "根据-{${functionName}}-对象Map统计查询总数记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据查询成功\",\"data\":\"[]\"},失败返回:{\"success\":false,\"message\",\"数据查询失败\"}")
+@ApiImplicitParams({@ApiImplicitParam(paramType = "body" , name = ${className}.ID_KEY, value = "主键ID" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.CREATE_TIME_KEY, value = "申请时间" , required = true, dataTypeClass = Date.class), @ApiImplicitParam(paramType = "body" , name = ${className}.UPDATE_TIME_KEY, value = "更新时间" , required = true, dataTypeClass = Date.class), @ApiImplicitParam(paramType = "body" , name = ${className}.APPLY_DEPT_KEY, value = "申请部门" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.APPLY_USER_KEY, value = "申请人" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.APPLY_USER_ID_KEY, value = "申请人Id" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.ORG_ID_KEY, value = "机构ID" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.ORG_NAME_KEY, value = "机构名字" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.GOODS_NAME_KEY, value = "存货名称" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.MODEL_KEY, value = "规格型号" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.UNIT_KEY, value = "单位" , required = true, dataTypeClass = String.class), @ApiImplicitParam(paramType = "body" , name = ${className}.AMOUNT_KEY, value = "结存数量 " , required = true, dataTypeClass = int.class), @ApiImplicitParam(paramType = "body" , name = ${className}.REMARK_KEY, value = "备注" , required = true, dataTypeClass = String.class)
+})
+@OperateLog(name = "根据-{${functionName}}-对象Map统计查询总数记录" , value = "query" , type = "PC")
+public Map<String, Object> countFor${className}ForWeb(HttpServletRequest request,HttpServletResponse response,@RequestBody Map<String, Object> map){
+        Map<String, Object> result=new HashMap<String, Object>();
+        try{
+
+        result.put(DATASUCCESS,SUCCESSFLAG);
+        result.put(DATAMESSAGE,QUERY_SUCCESS_MSG);
+        result.put(DATATOTAL, ${className}Service.count(map));
+        }catch(Exception e){
+        result.put(DATASUCCESS,ERRORFLAG);
+        result.put(DATAMESSAGE,QUERY_FAIL_MSG+e.getMessage());
+        }
+        return result;
+        }
+
+@PostMapping("/insertBatch")
+@ApiOperation(value = "根据-{${functionName}}-对象Map批量插入记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据插入成功\"},失败返回:{\"success\":false,\"message\",\"数据插入失败\"}")
+@ApiImplicitParams({
+    #foreach ($column in $columns)
+            @ApiImplicitParam(paramType = "body" , name = "$column.javaField" , value = "$column.columnComment" , required = true, dataType = "$column.javaType" , dataTypeClass = $column.javaType'.class'),
+    #end})
+@OperateLog(name = "根据-{${functionName}}-对象Map批量插入记录" , value = "insert" , type = "PC")
+public Map<String, Object> insertBatchFor${className}ForWeb(HttpServletRequest request,HttpServletResponse response,@RequestBody List<Map<String, Object>>list){
+        Map<String, Object> result=new HashMap<String, Object>();
+        try{
+
+        for(Map<String, Object> map:list){
+        map.put("id" ,UUID.randomUUID().toString().replaceAll("-" ,""));
+        }
+
+    ${className}Service.insertBatch(list);
+        result.put(DATASUCCESS,SUCCESSFLAG);
+        result.put(DATAMESSAGE,INSERT_SUCCESS_MSG);
+        }catch(Exception e){
+        result.put(DATASUCCESS,ERRORFLAG);
+        result.put(DATAMESSAGE,INSERT_FAIL_MSG+e.getMessage());
+        }
+        return result;
+        }
+
+@PostMapping("/deleteBatch")
+@ApiOperation(value = "根据-{${functionName}}-对象Map批量删除记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据删除成功\"},失败返回:{\"success\":false,\"message\",\"数据删除失败\"}")
+@ApiImplicitParam(paramType = "delete" , name = "recordid" , value = "记录主键" , required = true, dataTypeClass = String.class)
+@OperateLog(name = "根据-{${functionName}}-对象Map批量删除记录" , value = "delete" , type = "PC")
+public Map<String, Object> deleteBatchFor${className}ForWeb(HttpServletRequest request,HttpServletResponse response,@RequestBody List<Map<String, Object>>list){
+        Map<String, Object> result=new HashMap<String, Object>();
+        try{
+    ${className}Service.deleteBatch(list);
+        result.put(DATASUCCESS,SUCCESSFLAG);
+        result.put(DATAMESSAGE,DELETE_SUCCESS_MSG);
+
+        }catch(Exception e){
+        result.put(DATASUCCESS,ERRORFLAG);
+        result.put(DATAMESSAGE,DELETE_FAIL_MSG+e.getMessage());
+        }
+        return result;
+        }
+
+@PostMapping("/updateBatch")
+@ApiOperation(value = "根据-{${functionName}}-对象Map批量更新记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据更新成功\"},失败返回:{\"success\":false,\"message\",\"数据更新失败\"}")
+@ApiImplicitParams({
+    #foreach ($column in $columns)
+            @ApiImplicitParam(paramType = "body" , name = "$column.javaField" , value = "$column.columnComment" , required = true, dataType = "$column.javaType" , dataTypeClass = $column.javaType'.class'),
+    #end})
+@OperateLog(name = "根据-{${functionName}}-对象Map批量更新记录" , value = "update" , type = "PC")
+public Map<String, Object> updateBatchFor${className}ForWeb(HttpServletRequest request,HttpServletResponse response,@RequestBody List<Map<String, Object>>list){
+        Map<String, Object> result=new HashMap<String, Object>();
+        try{
+
+
+    ${className}Service.updateBatch(list);
+        result.put(DATASUCCESS,SUCCESSFLAG);
+        result.put(DATAMESSAGE,UPDATE_SUCCESS_MSG);
+
+        }catch(Exception e){
+        result.put(DATASUCCESS,ERRORFLAG);
+        result.put(DATAMESSAGE,UPDATE_FAIL_MSG+e.getMessage());
+        }
+        return result;
+        }
+
+
+#if($table.crud || $table.sub)
+/**
+ * 查询${functionName}列表
+ */
+@PostMapping("/list")
+@ResponseBody
+public TableDataInfo list(${ClassName} ${className}){
+        startPage();
+        List<${ClassName}> list= ${className}Service.select${ClassName}List(${className});
+        return getDataTable(list);
+        }
+#elseif($table.tree)
+/**
+ * 查询${functionName}树列表
+ */
+@PostMapping("/list")
+@ResponseBody
+public List<${ClassName}> list(${ClassName} ${className}){
+        List<${ClassName}> list= ${className}Service.select${ClassName}List(${className});
+        return list;
+        }
+#end
+
+/**
+ * 导出${functionName}列表
+ */
+@Log(title = "${functionName}" , businessType = BusinessType.EXPORT)
+@PostMapping("/export")
+@ResponseBody
+public AjaxResult export(${ClassName} ${className}){
+        List<${ClassName}> list= ${className}Service.select${ClassName}List(${className});
+        ExcelUtil<${ClassName}> util=new ExcelUtil<${ClassName}>(${ClassName}.class);
+        return util.exportExcel(list,"${functionName}数据");
+        }
+
+
+/**
+ * 修改保存${functionName}
+ */
+@Log(title = "${functionName}" , businessType = BusinessType.UPDATE)
+@PostMapping("/edit")
+@ResponseBody
+public AjaxResult editSave(${ClassName} ${className}){
+        return toAjax(${className}Service.update${ClassName}(${className}));
+        }
+
+#if($table.crud || $table.sub)
+/**
+ * 删除${functionName}
+ */
+@Log(title = "${functionName}" , businessType = BusinessType.DELETE)
+@PostMapping("/remove")
+@ResponseBody
+public AjaxResult remove(String ids){
+        return toAjax(${className}Service.delete${ClassName}By${pkColumn.capJavaField}s(ids));
+        }
+#elseif($table.tree)
+/**
+ * 删除
+ */
+@Log(title = "${functionName}" , businessType = BusinessType.DELETE)
+@GetMapping("/remove/{${pkColumn.javaField}}")
+@ResponseBody
+public AjaxResult remove(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}) {
+        return toAjax(${className}Service.delete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField}));
+        }
+#end
+
+        }

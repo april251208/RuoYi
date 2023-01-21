@@ -1,0 +1,94 @@
+package ${packageName}.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Dao;
+
+import ${packageName}.mapper.${ClassName}Mapper;
+import ${packageName}.service.I${ClassName}Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * ${functionName}Service业务层处理
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Repository
+public class ${ClassName}ServiceImpl implements I${ClassName}Service 
+{
+    @Autowired
+    private ${ClassName}Mapper ${className}Mapper;
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return ${className}Mapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Map<String, Object> selectByPrimaryKey(String id) {
+        return ${className}Mapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int insert(Map<String, Object> map) {
+        return ${className}Mapper.insert(map);
+    }
+
+    @Override
+    public int update(Map<String, Object> map) {
+        return ${className}Mapper.update(map);
+    }
+
+    @Override
+    public int deleteByMap(Map<String, Object> map) {
+        return ${className}Mapper.deleteByMap(map);
+    }
+
+    @Override
+    public int updateByMap(Map<String, Object> map) {
+        return ${className}Mapper.updateByMap(map);
+    }
+
+    @Override
+    public Map<String, Object> getOne(Map<String, Object> map) {
+        return ${className}Mapper.getOne(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getAll(Map<String, Object> map) {
+        return ${className}Mapper.getAll(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryPage(Map<String, Object> map) {
+        return ${className}Mapper.queryPage(map);
+    }
+
+    @Override
+    public int count(Map<String, Object> map) {
+        return ${className}Mapper.count(map);
+    }
+
+    @Override
+    public void insertBatch(List<Map<String, Object>> list) {
+        ${className}Mapper.insertBatch(list);
+    }
+
+    @Override
+    public void deleteBatch(List<Map<String, Object>> list) {
+        ${className}Mapper.deleteBatch(list);
+    }
+
+    @Override
+    public void updateBatch(List<Map<String, Object>> list) {
+        ${className}Mapper.updateBatch(list);
+    }
+}
