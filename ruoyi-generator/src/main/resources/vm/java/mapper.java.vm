@@ -9,5 +9,4 @@ import com.philisense.www.mapper.BaseCRUDMapper;
  * @date ${datetime}
  */
 public interface ${ClassName}Mapper  extends BaseCRUDMapper{
-{
 }

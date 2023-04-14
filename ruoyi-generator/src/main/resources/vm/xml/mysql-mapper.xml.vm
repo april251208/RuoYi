@@ -15,8 +15,8 @@
 
     <sql id="Base_Column_List">
             #foreach($column in $columns)
-                $column.columnName
-                #if($foreach.count != $columns.size()),#end
+                $column.columnName,
+                #if($foreach.count != $columns.size())#end
             #end
     </sql>
 
@@ -87,8 +87,7 @@
 
     </select>
 
-    <select id="count" parameterType="java.util.Map"
-            resultType="java.lang.Integer">
+    <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(1) from ${tableName}
         <include refid="Base_Query_Condition"/>
     </select>
@@ -101,9 +100,7 @@
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete
-        from ${tableName}
-            where id = #{id,jdbcType=VARCHAR}
+        delete from ${tableName} where id = #{id,jdbcType=VARCHAR}
     </delete>
 
 
@@ -118,7 +115,8 @@
             #foreach($column in $columns)
                 #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
                     <if test="$column.javaField != null#if($column.javaType ==
-                        'String' && $column.required) and $column.javaField != ''#end">$column.columnName,
+                        'String' && $column.required) and $column.javaField != ''#end">
+                        $column.columnName,
                     </if>
                 #end
             #end
@@ -127,7 +125,8 @@
             #foreach($column in $columns)
                 #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
                     <if test="$column.javaField != null#if($column.javaType ==
-                        'String' && $column.required) and $column.javaField != ''#end">#{$column.javaField},
+                        'String' && $column.required) and $column.javaField != ''#end">
+                    #{$column.javaField},
                     </if>
                 #end
             #end
@@ -141,8 +140,8 @@
             #foreach($column in $columns)
                 #if($column.columnName != $pkColumn.columnName)
                     <if test="$column.javaField != null#if($column.javaType ==
-                        'String' && $column.required) and $column.javaField != ''#end">$column.columnName =
-                        #{$column.javaField},
+                        'String' && $column.required) and $column.javaField != ''#end">
+                        $column.columnName =#{$column.javaField},
                     </if>
                 #end
             #end
@@ -156,8 +155,7 @@
         <include refid="Base_Query_Condition"/>
     </select>
 
-    <select id="getOne" parameterType="java.util.Map"
-            resultType="java.util.Map">
+    <select id="getOne" parameterType="java.util.Map" resultType="java.util.Map">
         select * from ${tableName}
         <include refid="Base_Query_Condition"/>
     </select>
@@ -169,7 +167,8 @@
             #foreach($column in $columns)
                 #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
                     <if test="$column.javaField != null#if($column.javaType ==
-                        'String' && $column.required) and $column.javaField != ''#end">$column.columnName,
+                        'String' && $column.required) and $column.javaField != ''#end">
+                        $column.columnName,
                     </if>
                 #end
             #end
@@ -181,7 +180,8 @@
                 #foreach($column in $columns)
                     #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
                         <if test="$column.javaField != null#if($column.javaType ==
-                            'String' && $column.required) and $column.javaField != ''#end">#{$column.javaField},
+                            'String' && $column.required) and $column.javaField != ''#end">
+                            #{$column.javaField},
                         </if>
                     #end
                 #end
@@ -207,14 +207,13 @@
                 #foreach($column in $columns)
                     #if($column.columnName != $pkColumn.columnName)
                         <if test="$column.javaField != null#if($column.javaType ==
-                            'String' && $column.required) and $column.javaField != ''#end">$column.columnName =
-                            #{$column.javaField},
+                            'String' && $column.required) and $column.javaField != ''#end">
+                            $column.columnName = #{$column.javaField},
                         </if>
                     #end
                 #end
             </trim>
-            WHERE
-            id = #{item.id,jdbcType=VARCHAR}
+            WHERE   id = #{item.id,jdbcType=VARCHAR}
         </foreach>
     </update>
 

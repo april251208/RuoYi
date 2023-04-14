@@ -33,7 +33,7 @@ import ${packageName}.service.${ClassName}Service;
 @Controller
 @RequestMapping(CommonConst.WEB_REST_SERVICE_PREFICX + "${className}")
 @API(tags = "${ClassName}Controller|一个用来操作-{${functionName}}-业务模块的控制器")
-public class ${ClassName}Controller extends BaseController {
+public class ${ClassName}Controller extends BaseUtilController {
 
     @Autowired
     private ${ClassName}Service ${className}Service;
@@ -45,7 +45,7 @@ public class ${ClassName}Controller extends BaseController {
     @ApiOperation(value = "根据-{${functionName}}-插入记录" , notes = "成功返回:{\"success\":true,\"message\",\"数据插入成功\"},失败返回:{\"success\":false,\"message\",\"数据插入失败\"}")
     @ApiImplicitParams({
         #foreach ($column in $columns)
-                @ApiImplicitParam(paramType = "body" , name = "$column.javaField" , value = "$column.columnComment" , required = true, dataType = "$column.javaType" , dataTypeClass = $column.javaType'.class'),
+                @ApiImplicitParam(paramType = "body" , name = "$column.javaField" , value = "$column.columnComment" , required = true, dataType = "$column.javaType" , dataTypeClass = $column.javaType+".class"),
         #end})
     @OperateLog(name = "根据-{${functionName}}-插入记录" , value = "插入" , type = "PC")
     public Map<String, Object> insertFor${ClassName}ForWeb(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map) {
