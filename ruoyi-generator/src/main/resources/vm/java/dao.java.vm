@@ -8,6 +8,4 @@ import ${packageName}.dao.BaseCRUDDAO;
  * @date ${datetime}
  */
 public interface ${ClassName}Dao extends BaseCRUDDAO{
-{
-
 }

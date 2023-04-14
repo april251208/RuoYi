@@ -1,7 +1,5 @@
 package ${packageName}.service.impl;
 
-import ${packageName}.dao.${ClassName}Dao;
-import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,7 @@ import java.util.Map;
  * @date ${datetime}
  */
 @Service
-public class ${ClassName}ServiceImpl implements I${ClassName}Service 
+public class ${ClassName}ServiceImpl implements ${ClassName}Service
 {
     @Autowired
     private ${ClassName}Dao ${className}Dao;

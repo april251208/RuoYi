@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Dao;
 
 import ${packageName}.mapper.${ClassName}Mapper;
-import ${packageName}.service.I${ClassName}Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,13 +16,12 @@ import java.util.Map;
 
 /**
  * ${functionName}Service业务层处理
- * 
+ *
  * @author ${author}
  * @date ${datetime}
  */
 @Repository
-public class ${ClassName}ServiceImpl implements I${ClassName}Service 
-{
+public class ${ClassName}DaoImpl implements ${ClassName}Dao {
     @Autowired
     private ${ClassName}Mapper ${className}Mapper;
 
@@ -79,16 +77,16 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
 
     @Override
     public void insertBatch(List<Map<String, Object>> list) {
-        ${className}Mapper.insertBatch(list);
+            ${className}Mapper.insertBatch(list);
     }
 
     @Override
     public void deleteBatch(List<Map<String, Object>> list) {
-        ${className}Mapper.deleteBatch(list);
+            ${className}Mapper.deleteBatch(list);
     }
 
     @Override
     public void updateBatch(List<Map<String, Object>> list) {
-        ${className}Mapper.updateBatch(list);
+            ${className}Mapper.updateBatch(list);
     }
 }

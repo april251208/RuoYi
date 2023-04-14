@@ -131,7 +131,7 @@ public class VelocityUtils
         templates.add("vm/java/serviceImpl.java.vm");
         templates.add("vm/java/service.java.vm");
         templates.add("vm/java/controller.java.vm");
-        templates.add("vm/xml/mapper.xml.vm");
+        templates.add("vm/xml/mysql-mapper.xml.vm");
         if (GenConstants.TPL_CRUD.equals(tplCategory))
         {
             templates.add("vm/html/list.html.vm");
@@ -204,7 +204,7 @@ public class VelocityUtils
         {
             fileName = StringUtils.format("{}/controller/{}Controller.java", javaPath, className);
         }
-        else if (template.contains("mapper.xml.vm"))
+        else if (template.contains("mysql-mapper.xml.vm"))
         {
             fileName = StringUtils.format("{}/{}Mapper.xml", mybatisPath, className);
         }

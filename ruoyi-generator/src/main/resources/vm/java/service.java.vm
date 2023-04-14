@@ -8,6 +8,5 @@ import ${packageName}.service.BaseCRUDService;
  * @date ${datetime}
  */
 public interface ${ClassName}Service extends BaseCRUDService{
-{
 
 }

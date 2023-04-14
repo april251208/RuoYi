@@ -19,8 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.*;
+
 import ${packageName}.pojos.entity.${ClassName};
-import ${packageName}.service.I${ClassName}Service;
+import ${packageName}.service.${ClassName}Service;
 
 
 /**
@@ -35,7 +36,7 @@ import ${packageName}.service.I${ClassName}Service;
 public class ${ClassName}Controller extends BaseController {
 
     @Autowired
-    private I${ClassName}Service ${className}Service;
+    private ${ClassName}Service ${className}Service;
 
     /**
      * 新增${functionName}
