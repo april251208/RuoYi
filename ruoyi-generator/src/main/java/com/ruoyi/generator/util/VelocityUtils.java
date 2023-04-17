@@ -194,11 +194,11 @@ public class VelocityUtils
         }
         else if (template.contains("dao.java.vm"))
         {
-            fileName = StringUtils.format("{}/service/{}Service.java", javaPath, className);
+            fileName = StringUtils.format("{}/dao/{}Dao.java", javaPath, className);
         }
         else if (template.contains("daoImpl.java.vm"))
         {
-            fileName = StringUtils.format("{}/service/impl/{}ServiceImpl.java", javaPath, className);
+            fileName = StringUtils.format("{}/dao/impl/{}DaoImpl.java", javaPath, className);
         }
         else if (template.contains("controller.java.vm"))
         {
@@ -206,7 +206,15 @@ public class VelocityUtils
         }
         else if (template.contains("mysql-mapper.xml.vm"))
         {
-            fileName = StringUtils.format("{}/{}Mapper.xml", mybatisPath, className);
+            fileName = StringUtils.format("{}/mapper/mysql/{}Mapper.xml", mybatisPath, className);
+        }
+        else if (template.contains("dm-mapper.xml.vm"))
+        {
+            fileName = StringUtils.format("{}/mapper/dm/{}Mapper.xml", mybatisPath, className);
+        }
+        else if (template.contains("oracle-mapper.xml.vm"))
+        {
+            fileName = StringUtils.format("{}/mapper/oracle/{}Mapper.xml", mybatisPath, className);
         }
         else if (template.contains("list.html.vm"))
         {

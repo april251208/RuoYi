@@ -126,7 +126,7 @@
                 #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
                     <if test="$column.javaField != null#if($column.javaType ==
                         'String' && $column.required) and $column.javaField != ''#end">
-                    #{$column.javaField},
+                        #{$column.javaField},
                     </if>
                 #end
             #end

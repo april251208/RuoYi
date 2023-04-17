@@ -14,6 +14,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
+        rownum as rw,
             #foreach($column in $columns)
                 $column.columnName,
                 #if($foreach.count != $columns.size())#end
@@ -65,25 +66,27 @@
                 #end
             #end
         </where>
-    </sql>
+</sql>
 
-    <sql id="Base_Query_Condition_Page">
-
-        <if test=" null != pageStart   and null != pageSize  ">
-            limit #{pageStart},#{pageSize}
+    <sql id="Oracle_Pagination_Head">
+        <if test="pageStart !=null and pageEnd !=null">
+            <![CDATA[select y.* from(select z.*,rownum as pageStart from (]]>
         </if>
-
     </sql>
 
+    <sql id="Oracle_Pagination_Tail">
+        <if test="pageStart != null and pageEnd != null">
+            <![CDATA[ ) z where rownum <= #{pageEnd} ) y where y.pageStart > #{pageStart} ]]>
+        </if>
+    </sql>
 
     <select id="queryPage" resultMap="BaseResultMap" parameterType="java.util.Map">
-
+        <include refid="Oracle_Pagination_Head"/>
         select
         <include refid="Base_Column_List"/>
         from ${tableName}
         <include refid="Base_Query_Condition"/>
-        <include refid="Base_Query_Condition_Page"/>
-
+        <include refid="Oracle_Pagination_Tail"/>
 
     </select>
 
@@ -174,7 +177,7 @@
             #end
         </trim>
         VALUES
-        <foreach collection="list" item="item" index="index" open="" separator="," close=";">
+        <foreach collection="list" item="item" index="index" open="begin" separator=";" close=";end;">
 
             <trim prefix="(" suffix=")" suffixOverrides=",">
                 #foreach($column in $columns)
@@ -201,7 +204,7 @@
     </delete>
 
     <update id="updateBatch" parameterType="java.util.List">
-        <foreach collection="list" item="item" index="index" open="" separator=";" close=";">
+        <foreach collection="list" item="item" index="index" open="begin" separator=";" close=";end;">
             UPDATE ${tableName}
             <trim prefix="SET" suffixOverrides=",">
                 #foreach($column in $columns)

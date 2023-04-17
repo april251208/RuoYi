@@ -212,10 +212,14 @@ public Map<String, Object> queryPageFor${className}ForWeb(HttpServletRequest req
         int currentPage=map.get(DATACURRENT)!=null?Integer.parseInt(map.get(DATACURRENT)+"")-1:0;
         int pageSize=map.get(PAGESIZE)!=null?Integer.parseInt(map.get(PAGESIZE)+""):10;
         int pageStart=currentPage*pageSize;
-
-
-        map.put(PAGESIZE,pageSize);
-        map.put(PAGESTART,pageStart);
+        String dbType="mysql"
+        if(dbType.equals("mysql")||dbType.equals("dm")){
+            map.put(PAGESIZE,pageSize);
+            map.put(PAGESTART,pageStart);
+        }else if(dbType.equals("oracle")){
+            map.put(PAGESTART, (currentPage - 1) * pageSize);
+            map.put(PAGEEND, currentPage * pageSize);
+        }
 
         int total= ${className}Service.count(map);
         List<Map<String, Object>>datalist=new ArrayList<Map<String, Object>>();
