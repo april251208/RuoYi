@@ -134,20 +134,20 @@ public class VelocityUtils
         templates.add("vm/xml/mysql-mapper.xml.vm");
         if (GenConstants.TPL_CRUD.equals(tplCategory))
         {
-            templates.add("vm/html/list.html.vm");
+            templates.add("vm/pages/business/list.js.vm");
         }
         else if (GenConstants.TPL_TREE.equals(tplCategory))
         {
-            templates.add("vm/html/tree.html.vm");
-            templates.add("vm/html/list-tree.html.vm");
+            templates.add("vm/pages/business/form/tree.html.vm");
+            templates.add("vm/pages/business/form/list-tree.html.vm");
         }
         else if (GenConstants.TPL_SUB.equals(tplCategory))
         {
-            templates.add("vm/html/list.html.vm");
+            templates.add("vm/pages/business/list.js.vm");
             templates.add("vm/java/sub-domain.java.vm");
         }
-        templates.add("vm/html/add.html.vm");
-        templates.add("vm/html/edit.html.vm");
+        templates.add("vm/pages/business/form/add.html.vm");
+        templates.add("vm/pages/business/form/edit.html.vm");
         templates.add("vm/sql/sql.vm");
         return templates;
     }
@@ -216,7 +216,7 @@ public class VelocityUtils
         {
             fileName = StringUtils.format("{}/mapper/oracle/{}Mapper.xml", mybatisPath, className);
         }
-        else if (template.contains("list.html.vm"))
+        else if (template.contains("list.js.vm"))
         {
             fileName = StringUtils.format("{}/{}.html", htmlPath, businessName);
         }

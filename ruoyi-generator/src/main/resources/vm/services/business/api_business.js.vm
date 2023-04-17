@@ -1,0 +1,123 @@
+import { stringify } from 'qs'
+import { request } from '@umijs/max'
+import webpath from '@/utils/webPath'
+
+export async function deleteByPrimaryKeyFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/delete?${stringify(params)}`)
+}
+
+export async function selectByPrimaryKeyFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/get?${stringify(params)}`)
+}
+
+export async function insertFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/insert`, {
+        method: 'POST',
+        data: {
+            ...params,
+            method: 'insert'
+        }
+    })
+}
+
+export async function updateFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/update`, {
+        method: 'POST',
+        data: {
+            ...params,
+            method: 'update'
+        }
+    })
+}
+
+export async function deleteByMapFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/deleteByMap`, {
+        method: 'POST',
+        data: {
+            ...params,
+            method: 'delete',
+        }
+    })
+}
+
+export async function updateByMapFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/updateByMap`, {
+        method: 'POST',
+        data: {
+            ...params,
+            method: 'update'
+        }
+    })
+}
+
+export async function getOneFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/getOne`, {
+        method: 'POST',
+        data: {
+            ...params,
+            method: 'fetch'
+        }
+    })
+}
+
+export async function getAllFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/getAll`, {
+        method: 'POST',
+        data: {
+            ...params,
+            method: 'fetch'
+        }
+    })
+}
+
+export async function queryPageFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/queryPage`, {
+        method: 'POST',
+        data: {
+            ...params,
+            method: 'fetch'
+        }
+    })
+}
+
+export async function countFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/count`, {
+        method: 'POST',
+        data: {
+            ...params,
+            method: 'fetch'
+        }
+    })
+}
+
+export async function insertBatchFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/insertBatch`, {
+        method: 'POST',
+        data: {
+            ...params,
+            method: 'insert'
+        }
+    })
+}
+
+
+export async function deleteBatchFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/deleteBatch`, {
+        method: 'POST',
+        data: {
+            ...params,
+            method: 'delete'
+        }
+    })
+}
+
+
+export async function updateBatchFor${ClassName}(params = {}) {
+    return request(`/${webpath.serverpath}/web/api/service/${className}/updateBatch`, {
+        method: 'POST',
+        data: {
+            ...params,
+            method: 'update'
+        }
+    })
+}

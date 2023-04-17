@@ -1,0 +1,336 @@
+import {
+    deleteByPrimaryKeyFor${ClassName},
+    selectByPrimaryKeyFor${ClassName},
+    insertFor${ClassName},
+    updateFor${ClassName},
+    deleteByMapFor${ClassName},
+    updateByMapFor${ClassName},
+    getOneFor${ClassName},
+    getAllFor${ClassName},
+    queryPageFor${ClassName},
+    countFor${ClassName},
+    insertBatchFor${ClassName},
+    deleteBatchFor${ClassName},
+    updateBatchFor${ClassName}
+} from '@/services/business/api_${className}';
+
+export default {
+    namespace: '${className}',
+
+    state: {
+        data: {
+            list: [],
+            pagination: {},
+        },
+    },
+
+    effects: {
+
+        * delete_by_primarykey_for_${className}({payload}, {call, put}) {
+            const response = yield call(deleteByPrimaryKeyFor${ClassName}, payload);
+            yield put({
+                type: 'deleteByPrimaryKeyFor${ClassName}',
+                payload: response,
+            });
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+            if (callback) callback(response);
+
+        },
+        * select_by_primarykey_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(selectByPrimaryKeyFor${ClassName}, payload);
+            yield put({
+                type: 'selectByPrimaryKeyFor${ClassName}',
+                payload: response,
+            });
+
+            if (callback) callback(response);
+        },
+        * insert_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(insertFor${ClassName}, payload);
+            yield put({
+                type: 'insertFor${ClassName}',
+                payload: response,
+            });
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+
+            if (callback) callback(response);
+        },
+        * update_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(updateFor${ClassName}, payload);
+            yield put({
+                type: 'updateFor${ClassName}',
+                payload: response,
+            });
+
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+
+            if (callback) callback(response);
+        },
+        * check_batch_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(updateBatchCheck, payload);
+            yield put({
+                type: 'updateBatchCheck',
+                payload: response,
+            });
+
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+
+            if (callback) callback(response);
+        },
+        * reverse_check_batch_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(reverseCheck, payload);
+            yield put({
+                type: 'reverseCheck',
+                payload: response,
+            });
+
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+
+            if (callback) callback(response);
+        },
+        * delete_by_map_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(deleteByMapFor${ClassName}, payload);
+            yield put({
+                type: 'deleteByMapFor${ClassName}',
+                payload: response,
+            });
+
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+
+            if (callback) callback();
+        },
+        * update_by_map_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(updateByMapFor${ClassName}, payload);
+            yield put({
+                type: 'updateByMapFor${ClassName}',
+                payload: response,
+            });
+
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+
+            if (callback) callback();
+        },
+        * get_one_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(getOneFor${ClassName}, payload);
+            yield put({
+                type: 'getOneFor${ClassName}',
+                payload: response,
+            });
+
+            if (callback) callback(response);
+        },
+        * get_records({payload, callback}, {call, put}) {
+            const response = yield call(getRecords, payload);
+            yield put({
+                type: 'getRecords',
+                payload: response,
+            });
+
+            if (callback) callback(response);
+        },
+        * get_all_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(getAllFor${ClassName}, payload);
+            yield put({
+                type: 'getAllFor${ClassName}',
+                payload: response,
+            });
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+
+            if (callback) callback();
+        },
+        * query_page_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(queryPageFor${ClassName}, payload);
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: response,
+            });
+
+            if (callback) callback(response);
+        },
+        * count_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(countFor${ClassName}, payload);
+            yield put({
+                type: 'countFor${ClassName}',
+                payload: response,
+            });
+
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+
+            if (callback) callback();
+        },
+        * insert_batch_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(insertBatchFor${ClassName}, payload);
+            yield put({
+                type: 'insertBatchFor${ClassName}',
+                payload: response,
+            });
+
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+
+
+            if (callback) callback();
+        },
+        * delete_batch_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(deleteBatchFor${ClassName}, payload);
+            yield put({
+                type: 'deleteBatchFor${ClassName}',
+                payload: response,
+            });
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+
+            if (callback) callback(response);
+        },
+        * update_batch_for_${className}({payload, callback}, {call, put}) {
+            const response = yield call(updateBatchFor${ClassName}, payload);
+            yield put({
+                type: 'updateBatchFor${ClassName}',
+                payload: response,
+            });
+
+            const responsedata = yield call(queryPageFor${ClassName}, {});
+            yield put({
+                type: 'queryPageFor${ClassName}',
+                payload: responsedata,
+            });
+
+            if (callback) callback();
+        },
+    },
+
+    reducers: {
+
+        deleteByPrimaryKeyFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        selectByPrimaryKeyFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        insertFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        updateFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        deleteByMapFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        updateByMapFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        getOneFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        getAllFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        queryPageFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        countFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        insertBatchFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        deleteBatchFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+        updateBatchFor${ClassName}(state, action) {
+            return {
+                ...state,
+                data: action.payload,
+            };
+        },
+    },
+};
